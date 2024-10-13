@@ -1,40 +1,54 @@
 ﻿
 using AppMAUI_TP6.Models;
-using System.Net.Http.Headers;
-using System.Text.Json;
 using AppMAUI_TP6.Utils;
-using System.Net.Http.Json;
-using System.Net;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace AppMAUI_TP6.Service
 {
-    public class ProductoService : IProductoService
+    public class ProductoService
     {
-        HttpClient client;
+        private readonly HttpClient _httpClient;
 
-        private static JsonSerializerOptions options = new()
-        {
-            PropertyNameCaseInsensitive = true
-        };
+        public ProductoService() {
+            _httpClient = new HttpClient();
+            // Configura la base URL de la API
+            _httpClient.BaseAddress = new Uri(EndPoints.URLApi);           
 
-        public ProductoService()
-        {
-            client = new HttpClient();
-
-            client.BaseAddress = new Uri(EndPoints.);
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<IEnumerable<Producto>> GetProductsAsync()
+        public async Task<List<Producto>> GetListaProductos()
         {
-            var response = await client.GetAsync(EndPoints.Producto);
+
+            // Recupera el token JWT almacenado en SecureStorage
+            var token = await SecureStorage.GetAsync("auth_token");
+
+            if (string.IsNullOrEmpty(token))
+            {
+                throw new Exception("No se encontró el token de autenticación.");
+            }
+
+            // Añade el token al encabezado de autorizacion
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+
+            // Enviar la solicitud al endpoint de Lista Producto
+            var response = await _httpClient.GetAsync(EndPoints.ListaProducto);
 
             if (response.IsSuccessStatusCode)
-                return await response.Content.ReadFromJsonAsync<IEnumerable<Producto>>(options);
-
-            return default;
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                var productos = JsonConvert.DeserializeObject<List<Producto>>(json);
+                return productos;
+            }
+            else
+            {
+                throw new Exception("Fallo en la solicitud de datos (o puedes que no estes autorizado)");
+            }
         }
 
+
     }
+
 }

@@ -4,57 +4,53 @@ using System.Text.Json;
 using AppMAUI_TP6.Utils;
 using System.Net.Http.Json;
 using System.Text;
+
+using AppMAUI_TP6.Models;
 using AppMAUI_TP6.Utils;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
 
 namespace AppMAUI_TP6.Service
 {
-    public class UsuarioService : IUsuarioService
+    
+    public class UsuarioService
     {
-        HttpClient client;
-
-        private static JsonSerializerOptions options = new()
-        {
-            PropertyNameCaseInsensitive = true
-        };
+        private readonly HttpClient _httpClient;
 
         public UsuarioService()
         {
-            client = new HttpClient();
-            client.BaseAddress = new Uri(EndPoints.URLApi);
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClient = new HttpClient();
+            // Configura la base URL de la API
+            _httpClient.BaseAddress = new Uri(EndPoints.URLApi);
         }
 
-        public async Task<IEnumerable<Usuario>> GetUsersAsync()
+        public async Task<List<Usuario>> GetListaUsuario()
         {
-            var response = await client.GetAsync(EndPoints.Usuario); 
+            // Recupera el token JWT almacenado en SecureStorage
+            var token = await SecureStorage.GetAsync("auth_token");
 
-            if (response.IsSuccessStatusCode)
-                return await response.Content.ReadFromJsonAsync<IEnumerable<Usuario>>(options);
-
-            return default;
-        }
-
-        //El endpoint de Login recibe un cuerpo con las credenciales de usuario(nombre de usuario y contraseña) en una petición POST, y devuelve un token de autenticación si las credenciales son correctas
-        public async Task<string> AuthenticateUserAsync(string username, string password)
-        {
-            var loginData = new
+            if (string.IsNullOrEmpty(token))
             {
-                username = username,
-                password = password
-            };
-
-            var content = new StringContent(JsonSerializer.Serialize(loginData), Encoding.UTF8, "application/json");
-
-            var response = await client.PostAsync(EndPoints.Login, content);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var result = await response.Content.ReadFromJsonAsync<Login>();
-                return result?.Token;
+                throw new Exception("No se encontró el token de autenticación.");
             }
 
-            return null;
+            // Añade el token al encabezado de autorizacion
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+
+            // Enviar la solicitud al endpoint de Lista Producto
+            var response = await _httpClient.GetAsync(EndPoints.ListaUsuario);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                var usuario = JsonConvert.DeserializeObject<List<Usuario>>(json);
+                return usuario;
+            }
+            else
+            {
+                throw new Exception("Fallo en la solicitud de datos");
+            }
         }
     }
 }

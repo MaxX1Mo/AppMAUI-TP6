@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppMAUI_TP6.Views.ProductoListaPage"
+             xmlns:vm="clr-namespace:AppMAUI_TP6.ViewModel"
+             xmlns:model="clr-namespace:AppMAUI_TP6.Models"
+             x:DataType="vm:ProductoListaViewModel"
+             Title="{Binding Title}">
+    <Grid ColumnDefinitions="*,*" ColumnSpacing="5" RowDefinitions="*,Auto" RowSpacing="0">
+
+        <RefreshView Grid.ColumnSpan="2" Command="{Binding GetProductosCommand}" IsRefreshing="{Binding IsRefreshing}">
+            <CollectionView Grid.Row="1"
+                            ItemsSource="{Binding Productos}"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding ProductoSeleccionado}"
+                            SelectionChangedCommand="{Binding GoToDetailCommand}">
+
+                <!-- Vista cuando no hay elementos -->
+                <CollectionView.EmptyView>
+                    <StackLayout Padding="100">
+                        <Image Source="loading.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                        <Label Text="Cargando..." TextColor="Silver" VerticalOptions="Center" FontSize="23" Margin="10" HorizontalOptions="Center"/>
+                    </StackLayout>
+                </CollectionView.EmptyView>
+
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Producto">
+                        <Frame Padding="10" Margin="5" BorderColor="Silver" CornerRadius="15" HasShadow="True" BackgroundColor="White"
+                               InputTransparent="True">
+
+                            <Grid ColumnDefinitions="0.3*, 0.7*" Margin="5,0" ColumnSpacing="15" InputTransparent="True">
+
+                                <!-- Imagen del producto -->
+                                <Image Grid.Column="0"
+                                       Source="{Binding Imagen}"
+                                       WidthRequest="80"
+                                       HeightRequest="80"
+                                       Aspect="AspectFit"
+                                       HorizontalOptions="Start"
+                                       InputTransparent="True"/>
+
+                                <!-- Información del producto -->
+                                <StackLayout Grid.Column="1" VerticalOptions="Center" InputTransparent="True">
+                                    <Label Text="{Binding NombreProducto}"
+                                           FontAttributes="Bold"
+                                           FontSize="Medium"
+                                           TextColor="Black"
+                                           InputTransparent="True"/>
+                                    <Label Text="{Binding Precio, StringFormat='{0:C}'}"
+                                           FontSize="Small"
+                                           TextColor="Green"
+                                           InputTransparent="True"/>
+                                </StackLayout>
+
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

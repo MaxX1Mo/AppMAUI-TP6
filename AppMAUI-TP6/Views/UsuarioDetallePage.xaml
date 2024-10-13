@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppMAUI_TP6.Views.UsuarioDetallePage"
+             xmlns:vm="clr-namespace:AppMAUI_TP6.ViewModel"
+             xmlns:models="clr-namespace:AppMAUI_TP6.Models"
+             x:DataType="vm:UsuarioDetalleViewModel"
+             Title="{Binding Title}">
+    <ScrollView>
+        <VerticalStackLayout Margin="10">
+
+            <Grid ColumnDefinitions="Auto, *, *" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto" ColumnSpacing="10" RowSpacing="10">
+
+                <!-- Nombre -->
+                <Label Text="Nombre" Grid.Row="0" Grid.Column="0" VerticalOptions="Center"/>
+                <HorizontalStackLayout Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2">
+                    <Entry Text="{Binding Usuario.Nombre}" VerticalOptions="Center" IsReadOnly="True"/>
+                    <Entry Text="{Binding Usuario.Apellido}" VerticalOptions="Center" Margin="5,0,0,0" IsReadOnly="True"/>
+                </HorizontalStackLayout>
+
+                <!-- Email -->
+                <Label Text="Email" Grid.Row="1" Grid.Column="0" VerticalOptions="Center"/>
+                <Entry Text="{Binding Usuario.Email}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" IsReadOnly="True"/>
+
+                <!-- Username y Password -->
+                <Label Text="Username y password" Grid.Row="2" Grid.Column="0" VerticalOptions="Center"/>
+                <Entry Text="{Binding Usuario.Username}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" IsReadOnly="True"/>
+
+                <!-- Telefono -->
+                <Label Text="Telefono" Grid.Row="3" Grid.Column="0" VerticalOptions="Center"/>
+                <Entry Text="{Binding Usuario.NroCelular}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" IsReadOnly="True"/>
+
+                <!-- Rol -->
+                <Label Text="Rol" Grid.Row="4" Grid.Column="0" VerticalOptions="Center"/>
+                <Entry Text="{Binding Usuario.Rol}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" IsReadOnly="True"/>
+
+                <!-- ID Persona -->
+                <Label Text="ID Persona" Grid.Row="5" Grid.Column="0" VerticalOptions="Center"/>
+                <Entry Text="{Binding Usuario.IDPersona}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" IsReadOnly="True"/>
+
+                <!-- ID Usuario -->
+                <Label Text="ID Usuario" Grid.Row="6" Grid.Column="0" VerticalOptions="Center"/>
+                <Entry Text="{Binding Usuario.IDUsuario}" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" IsReadOnly="True"/>
+            </Grid>
+
+            <!-- Botón para volver -->
+            <Button Text="Volver a Lista" Margin="0,20,0,0" Command="{Binding GoBackCommand}" HorizontalOptions="Center"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

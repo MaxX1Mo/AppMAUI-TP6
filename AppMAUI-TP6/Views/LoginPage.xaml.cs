@@ -1,13 +1,13 @@
-//using AppMAUI_TP6.ViewModel;
-using AppMAUI_TP6.Service;
+using AppMAUI_TP6.Views;
+using AppMAUI_TP6.ViewModel;
 
 namespace AppMAUI_TP6.Views;
 
 public partial class LoginPage : ContentPage
 {
-	public LoginPage()
+	public LoginPage(LoginViewModel viewModel)
 	{
 		InitializeComponent();
-        BindingContext = new LoginViewModel(DependencyService.Get<IUsuarioService>());
+        BindingContext = viewModel;
     }
 }

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppMAUI_TP6.Views.UsuarioListaPage"
+             xmlns:vm="clr-namespace:AppMAUI_TP6.ViewModel"
+             xmlns:model="clr-namespace:AppMAUI_TP6.Models"
+             x:DataType="vm:UsuarioListaViewModel"
+             Title="{Binding Title}">
+    <Grid ColumnDefinitions="*,*" ColumnSpacing="5" RowDefinitions="*,Auto" RowSpacing="0">
+
+        <RefreshView Grid.ColumnSpan="2" Command="{Binding GetUsuariosCommand}" IsRefreshing="{Binding IsRefreshing}">
+
+            <CollectionView Grid.Row="1"
+                            ItemsSource="{Binding Usuarios}"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding UsuarioSeleccionado}"
+                            SelectionChangedCommand="{Binding GoToDetailCommand}">
+
+                <!-- Vista cuando no hay elementos -->
+                <CollectionView.EmptyView>
+                    <StackLayout Padding="100">
+                        <Image Source="loading.jpg" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                        <Label Text="Cargando..." TextColor="Silver" VerticalOptions="Center" FontSize="23" Margin="10" HorizontalOptions="Center"/>
+                    </StackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+
+                    <DataTemplate x:DataType="model:Usuario">
+
+                        <Frame Padding="10" Margin="5" BorderColor="BlueViolet" CornerRadius="10" HasShadow="True" InputTransparent="True" BackgroundColor="DimGray">
+
+                            <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="Auto, *">
+
+                                <!-- Imagen del lado izquierdo -->
+                                <Label VerticalOptions="Center" Text="{x:Static model:MaterialIcons.Person}" 
+                                       FontSize="50" TextColor="Blue" FontFamily="MaterialDesignIcons" 
+                                       Grid.RowSpan="3" 
+                                       Margin="0,0,10,0"/>
+
+                                <!-- Nombre -->
+                                <HorizontalStackLayout Grid.Row="0" Grid.Column="1" Margin="0,0,0,5">
+                                    <Label Text="Name: " FontSize="18" VerticalOptions="Center" FontAttributes="Bold" TextColor="LightBlue"/>
+                                    <Label Text="{Binding Nombre}" FontSize="18" TextColor="SkyBlue"/>
+                                    <Label Text="{Binding Apellido}" FontSize="18" Margin="5,0,0,0" TextColor="SkyBlue"/>
+                                </HorizontalStackLayout>
+
+                                <!-- Username -->
+                                <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Margin="0,0,0,5">
+                                    <Label Text="Username: " FontSize="18" VerticalOptions="Center" FontAttributes="Bold" TextColor="LightBlue"/>
+                                    <Label Text="{Binding Username}" FontSize="18" TextColor="SkyBlue"/>
+                                </HorizontalStackLayout>
+
+                                <!-- Email -->
+                                <HorizontalStackLayout Grid.Row="2" Grid.Column="1">
+                                    <Label Text="Email: " FontSize="18" VerticalOptions="Center" FontAttributes="Bold" TextColor="LightBlue"/>
+                                    <Label Text="{Binding Email}" FontSize="18" TextColor="SkyBlue"/>
+                                </HorizontalStackLayout>
+
+                            </Grid>
+
+                        </Frame>
+
+                    </DataTemplate>
+
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

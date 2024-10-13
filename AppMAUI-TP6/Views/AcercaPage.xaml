@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppMAUI_TP6.Views.AcercaPage"
+             xmlns:vm="clr-namespace:AppMAUI_TP6.ViewModel"
+             x:DataType="vm:AcercaViewModel"
+             Title="{Binding Title}">
+    <StackLayout>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <Image Source="imagenejemplo.jpg"
+                   HeightRequest="150"
+                   WidthRequest="150"
+                   HorizontalOptions="Center"
+                   Aspect="AspectFill"/>
+
+            <Label Text="Nombre del Programador: Maximo Olguin Muñoz"
+                   FontSize="20"
+                   HorizontalOptions="Center"/>
+
+            <Label Text="Email: maxiolguinmunoz@gmail.com"
+                   FontSize="16"
+                   HorizontalOptions="Center"/>
+
+            <Label Text="Nro telefono: +2954582566"
+                   FontSize="16"
+                   HorizontalOptions="Center"/>
+
+            <Button Text="Contactar"
+                    Command="{Binding ContactCommand}"
+                    HorizontalOptions="Center"/>
+
+            <Button Text="Volver al Menú"
+                    Command="{Binding VolverCommand}"
+                    HorizontalOptions="Center"/>
+
+        </VerticalStackLayout>
+        <Label Text="Copyright: MercadoGamer.com" FontAttributes="Italic" TextColor="Silver" HorizontalOptions="Center" Margin="0,100,0,0"/>
+    </StackLayout>
+</ContentPage>
