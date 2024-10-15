@@ -23,9 +23,33 @@ namespace AppMAUI_TP6.Service
             _httpClient.BaseAddress = new Uri(EndPoints.URLApi);
         }
 
-        // Método para crear un nuevo carrito
-        public async Task<int> CrearCarrito(int productoId, int cantidad)
+        public async Task<List<Carrito>> GetListaCarritos()
         {
+            #region autenticacion
+            var token = await SecureStorage.GetAsync("auth_token");
+            if (string.IsNullOrEmpty(token)) { throw new Exception("No se encontró el token de autenticación."); }
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            #endregion
+            
+            var response = await _httpClient.GetAsync(EndPoints.ListaCarrito);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                var carritos = JsonConvert.DeserializeObject<List<Carrito>>(json);
+                return carritos;
+            }
+            else
+            {
+                throw new Exception("Fallo en la solicitud de datos ");
+            }
+        }
+
+        #region no funciona lo dejo a futuro
+        // Método para crear un nuevo carrito
+        public async Task CrearCarrito(int productoId, int cantidad)
+        {
+            #region logica para autenticacion y extraer dato idusuario
             var token = await SecureStorage.GetAsync("auth_token");
             if (string.IsNullOrEmpty(token))
                 throw new Exception("No se encontró el token de autenticación.");
@@ -44,14 +68,11 @@ namespace AppMAUI_TP6.Service
                 throw new Exception("No se encontró el claim 'nameidentifier' en el token.");
 
             int usuarioId = int.Parse(usuarioIdClaim.Value); // Convertir el valor de string a int
-
-            // Obtener la fecha actual 
-            var fechaActual = DateTime.UtcNow;
+            #endregion
 
             var carritoData = new
             {
                 IDUsuario = usuarioId,
-                Fecha = fechaActual,
                 DetallesCarrito = new[]
                 {
                 new { ProductoId = productoId, Cantidad = cantidad }
@@ -61,65 +82,33 @@ namespace AppMAUI_TP6.Service
             var content = new StringContent(JsonConvert.SerializeObject(carritoData), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(EndPoints.CrearCarrito, content);
 
-            if (response.IsSuccessStatusCode)
-            {
-                var result = await response.Content.ReadAsStringAsync();
-                var carritoId = JsonConvert.DeserializeObject<int>(result); // Asume que el API devuelve el ID del carrito
-                return carritoId;
-            }
-            else
+            if (!response.IsSuccessStatusCode)
             {
                 throw new Exception("Error al crear el carrito.");
             }
         }
+        #endregion
 
-        // Método para editar un carrito existente
-        public async Task EditarCarrito(int carritoId, int productoId, int cantidad)
+        
+        public async Task EliminarCarrito(int idCarrito)
         {
+
+            #region autenticacion
             var token = await SecureStorage.GetAsync("auth_token");
-            if (string.IsNullOrEmpty(token))
-                throw new Exception("No se encontró el token de autenticación.");
-
+            if (string.IsNullOrEmpty(token)) { throw new Exception("No se encontró el token de autenticación."); }
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            
-            var fechaActual = DateTime.UtcNow;
-            var carritoData = new
-            {
-                ProductoId = productoId,
-                FechaActual = fechaActual,
-                Cantidad = cantidad
-            };
+            #endregion
 
-            var content = new StringContent(JsonConvert.SerializeObject(carritoData), Encoding.UTF8, "application/json");
-            var response = await _httpClient.PutAsync($"Carrito/editar/{carritoId}", content);
+            var response = await _httpClient.DeleteAsync($"Carrito/eliminar/{idCarrito}");
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception("Error al editar el carrito.");
+                throw new Exception("Algo fallo en la eliminacion del carrito");
             }
         }
+        
 
-        public async Task<List<DetalleCarrito>> ObtenerDetallesCarrito(int carritoId)
-        {
-            var token = await SecureStorage.GetAsync("auth_token");
-            if (string.IsNullOrEmpty(token))
-                throw new Exception("No se encontró el token de autenticación.");
 
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-            var response = await _httpClient.GetAsync($"Carrito/buscar/{carritoId}");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var json = await response.Content.ReadAsStringAsync();
-                var detalles = JsonConvert.DeserializeObject<List<DetalleCarrito>>(json);
-                return detalles;
-            }
-            else
-            {
-                throw new Exception("Error al obtener detalles del carrito.");
-            }
-        }
 
     }
 }

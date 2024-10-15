@@ -14,7 +14,6 @@ namespace AppMAUI_TP6.Models
         public decimal Precio { get; set; }
         public string Imagen { get; set; }
         public int Stock { get; set; }
-        //public string Cantidad { get; set; }
 
        
     }

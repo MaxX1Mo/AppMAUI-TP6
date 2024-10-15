@@ -52,5 +52,71 @@ namespace AppMAUI_TP6.Service
                 throw new Exception("Fallo en la solicitud de datos");
             }
         }
+
+
+        #region Crud 
+        public async Task EditarUsuario(int idUsuario, string email, string username, string password, int idPersona, string nombre, string apellido, string nroCelular, string rol)
+        {
+            var user = new { id = idUsuario, em = email, usern = username, pass = password, personaid = idPersona, nomb = nombre, ape = apellido, nro = nroCelular, Rol = rol };
+            var jsonContent = JsonConvert.SerializeObject(user);
+            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+
+            #region autenticacion
+            var token = await SecureStorage.GetAsync("auth_token");
+            if (string.IsNullOrEmpty(token)) { throw new Exception("No se encontró el token de autenticación."); }
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            #endregion
+
+            var response = await _httpClient.PutAsync(EndPoints.EditarUsuario, content);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Algo fallo en la edicion del usuario");
+            }
+        }
+
+        public async Task EliminarUsuario(int idUsuario)
+        {
+            var id = new { Id = idUsuario };
+            var jsonContent = JsonConvert.SerializeObject(id);
+            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+            #region autenticacion
+            var token = await SecureStorage.GetAsync("auth_token");
+            if (string.IsNullOrEmpty(token)) { throw new Exception("No se encontró el token de autenticación."); }
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            #endregion
+
+            var response = await _httpClient.DeleteAsync($"Usuario/eliminar/{content}");
+            
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Algo fallo en la eliminacion del usuario");
+            }
+        }
+
+        public async Task CrearUsuario(string email, string username, string password, string nombre, string apellido, string nroCelular, string rol)
+        {
+            var user = new { em = email, usern = username, pass = password, nomb = nombre, ape = apellido, nro = nroCelular, Rol = rol };
+            var jsonContent = JsonConvert.SerializeObject(user);
+            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+            #region autenticacion
+            var token = await SecureStorage.GetAsync("auth_token");
+            if (string.IsNullOrEmpty(token)) { throw new Exception("No se encontró el token de autenticación."); }
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            #endregion
+
+            var response = await _httpClient.PostAsync(EndPoints.CrearUsuario, content);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Error en la creacion del usuario");
+            }
+        }
+
+
+        #endregion
     }
 }

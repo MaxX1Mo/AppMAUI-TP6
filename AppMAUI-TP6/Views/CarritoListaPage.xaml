@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppMAUI_TP6.Views.ViewsCrud.CarritoListaPage"
+             xmlns:vm="clr-namespace:AppMAUI_TP6.ViewModel"
+             xmlns:model="clr-namespace:AppMAUI_TP6.Models"
+             x:DataType="vm:CarritoListaViewModel"
+             Title="{Binding Title}">
+    <Grid ColumnDefinitions="*,*" ColumnSpacing="5" RowDefinitions="*,Auto" RowSpacing="0">
+
+        <RefreshView Grid.ColumnSpan="2" Command="{Binding GetCarritosCommand}" IsRefreshing="{Binding IsRefreshing}">
+
+            <CollectionView Grid.Row="1"
+                            ItemsSource="{Binding Carritos}"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding CarritoSeleccionado}"
+                            SelectionChangedCommand="{Binding GoToDetailCommand}">
+
+                <!-- Vista cuando no hay elementos -->
+                <CollectionView.EmptyView>
+                    <StackLayout Padding="100">
+                        <Image Source="loading.jpg" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                        <Label Text="Cargando..." TextColor="Silver" VerticalOptions="Center" FontSize="23" Margin="10" HorizontalOptions="Center"/>
+                    </StackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+
+                    <DataTemplate x:DataType="model:Carrito">
+
+                        <Frame Padding="10" Margin="5" BorderColor="BlueViolet" CornerRadius="10" HasShadow="True" InputTransparent="True" BackgroundColor="DimGray">
+
+                            <Grid RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, *">
+
+                                <!-- ID Carrito-->
+                                <HorizontalStackLayout >
+                                    <Label Text="ID carrito: " FontSize="18" VerticalOptions="Center" FontAttributes="Bold" TextColor="LightBlue"/>
+                                    <Label Text="{Binding idCarrito}" FontSize="18" TextColor="SkyBlue"/>
+                                </HorizontalStackLayout>
+                                <!-- ID USUARIO-->
+                                <HorizontalStackLayout Grid.Row="1">
+                                    <Label Text="ID Usuario: " FontSize="18" VerticalOptions="Center" FontAttributes="Bold" TextColor="LightBlue"/>
+                                    <Label Text="{Binding idUsuario}" FontSize="18" TextColor="SkyBlue"/>
+                                </HorizontalStackLayout>
+                                <!-- Fecha-->
+                                <HorizontalStackLayout Grid.Row="2">
+                                    <Label Text="Fecha: " FontSize="18" VerticalOptions="Center" FontAttributes="Bold" TextColor="LightBlue"/>
+                                    <Label Text="{Binding fecha}" FontSize="18" TextColor="SkyBlue"/>
+                                </HorizontalStackLayout>
+
+                            </Grid>
+
+
+                        </Frame>
+
+                    </DataTemplate>
+
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

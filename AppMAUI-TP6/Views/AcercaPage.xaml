@@ -35,6 +35,6 @@
                     HorizontalOptions="Center"/>
 
         </VerticalStackLayout>
-        <Label Text="Copyright: MercadoGamer.com" FontAttributes="Italic" TextColor="Silver" HorizontalOptions="Center" Margin="0,100,0,0"/>
+        <Label Text="Copyright: PCGamingStore.com" FontAttributes="Italic" TextColor="Silver" HorizontalOptions="Center" Margin="0,100,0,0"/>
     </StackLayout>
 </ContentPage>

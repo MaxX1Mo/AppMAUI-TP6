@@ -1,65 +1,81 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using AppMAUI_TP6.Models;
-using AppMAUI_TP6.Service;
+﻿using AppMAUI_TP6.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Maui.Graphics.Text;
-
+using AppMAUI_TP6.Service;
 namespace AppMAUI_TP6.ViewModel
 {
     public partial class ProductoDetalleViewModel : BaseViewModel
     {
-        private readonly CarritoService _carritoService;
+        private readonly ProductoService _productoService;
+
         
         [ObservableProperty]
         Producto producto;
-
-        [ObservableProperty]
-        string cantidadtext;
-
-        public ProductoDetalleViewModel(CarritoService carritoService)
+        public ProductoDetalleViewModel(ProductoService productoService)
         {
-            Title = "Detalle de Producto";
-            _carritoService = carritoService;
+            _productoService = productoService;
+            Title = "Detalles del Producto";
         }
+
+        #region no esta en funcionamiento, la eliminacion funciona pero dando un mensaje de error
         [RelayCommand]
-        private async Task AgregarAlCarrito()
+        public async Task GuardarProductoAsync()
         {
-            // Validar que la cantidad sea un número y convertirla a entero
-            if (!int.TryParse(cantidadtext, out int cantidad) || cantidad <= 0)
-            {
-                await App.Current.MainPage.DisplayAlert("Cantidad inválida", "Por favor, ingrese una cantidad válida.", "OK");
-                return;
-            }
             try
             {
-                // Verifica que la cantidad no exceda el stock
-                if (cantidad > producto.Stock)
+                if (producto.IDProducto == 0)
                 {
-                    await App.Current.MainPage.DisplayAlert("Error", "La cantidad solicitada excede el stock disponible.", "OK");
-                    return;
+                    // Crear un nuevo producto
+                    await _productoService.CrearProducto(producto.NombreProducto, producto.Descripcion, producto.Precio, producto.Imagen, producto.Stock);
+                    await App.Current.MainPage.DisplayAlert("Éxito", "Producto creado correctamente", "OK");
                 }
-
-                await _carritoService.CrearCarrito(producto.IDProducto, cantidad);
-                await App.Current.MainPage.DisplayAlert("Carrito", "Producto agregado al carrito", "OK");
-
+                else
+                {
+                    // Editar producto existente
+                    await _productoService.EditarProducto(producto.IDProducto, producto.NombreProducto, producto.Descripcion, producto.Precio, producto.Imagen, producto.Stock);
+                    await App.Current.MainPage.DisplayAlert("Éxito", "Producto editado correctamente", "OK");
+                }
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+                await App.Current.MainPage.DisplayAlert("Error", $"Hubo un problema: {ex.Message}", "OK");
             }
         }
+
+        [RelayCommand]
+        public async Task EliminarProductoAsync()
+        {
+            try
+            {
+                bool confirm = await App.Current.MainPage.DisplayAlert("Confirmar", "¿Estás seguro de eliminar el producto?", "Sí", "No");
+
+                if (confirm)
+                {
+                    await _productoService.EliminarProducto(producto.IDProducto);
+                    await App.Current.MainPage.DisplayAlert("Éxito", "Producto eliminado correctamente", "OK");
+                    // Volver a la página anterior
+                    await Shell.Current.GoToAsync("..");
+                }
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Error", $"Hubo un problema: {ex.Message}", "OK");
+            }
+        }
+        #endregion
+
+        public ProductoDetalleViewModel()
+        {
+            Title = "Detalle de Producto";
+
+        }
+
         [RelayCommand]
         private async Task GoBack()
         {
             await Application.Current.MainPage.Navigation.PopAsync();
 
         }
-
     }
+
 }

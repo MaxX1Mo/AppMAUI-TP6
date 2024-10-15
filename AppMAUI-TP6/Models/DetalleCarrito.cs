@@ -8,8 +8,8 @@ namespace AppMAUI_TP6.Models
 {
     public class DetalleCarrito
     {
-        public int IDDetallesCarrito { get; set; }
-        public int Cantidad { get; set; }
-        public int IDProducto { get; set; }
+        public int idDetallesCarrito { get; set; }
+        public int cantidad { get; set; }
+        public int idProducto { get; set; }
     }
 }

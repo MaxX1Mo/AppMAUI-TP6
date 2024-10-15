@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AppMAUI_TP6.Views;
 
+
 namespace AppMAUI_TP6.ViewModel
 {
     public partial class MainViewModel : BaseViewModel
@@ -14,7 +15,7 @@ namespace AppMAUI_TP6.ViewModel
 
         public MainViewModel()
         {
-            Title = "MercadoGamer";
+            Title = "PCGaming Store";
         }
 
         [RelayCommand]
@@ -33,11 +34,18 @@ namespace AppMAUI_TP6.ViewModel
         {
             await Application.Current.MainPage.Navigation.PushAsync(new UsuarioListaPage());
         }
-
+        [RelayCommand]
+        public async Task GoToCarritoLista()
+        {
+            await Application.Current.MainPage.Navigation.PushAsync(new CarritoListaPage());
+        }
+        
+        
         [RelayCommand]
         public async Task Exit()
         {
-            await Application.Current.MainPage.DisplayAlert("Salir", "¿Desea terminar la sesión y salir?", "Aceptar");
+            await Application.Current.MainPage.DisplayAlert("Salir", "¿Desea terminar la sesión y salir?", "Aceptar", "Cancel");
+            
             SecureStorage.Remove("auth_token");
             await Application.Current.MainPage.Navigation.PopAsync();
         }
