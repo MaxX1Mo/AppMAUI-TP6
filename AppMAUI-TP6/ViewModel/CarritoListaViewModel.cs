@@ -1,11 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AppMAUI_TP6.Models;
 using AppMAUI_TP6.Service;
 using AppMAUI_TP6.Views;
@@ -65,31 +60,6 @@ namespace AppMAUI_TP6.ViewModel
                 }
             }
         }
-        [RelayCommand]
-        private async Task Eliminar(int id)
-        {
-
-            if (!IsBusy)
-            {
-                try
-                {
-                    IsBusy = true;
-
-                    await _carritoService.EliminarCarrito(id);
-
-                    IsBusy = false;
-                }
-                catch (Exception ex)
-                {
-                    await App.Current.MainPage.DisplayAlert("Error!", ex.Message, "Ok");
-
-                }
-                finally
-                {
-                    IsBusy = false;
-                }
-            }
-        }
 
         [RelayCommand]
         private async Task GoToDetail()
@@ -103,5 +73,6 @@ namespace AppMAUI_TP6.ViewModel
             await Application.Current.MainPage.Navigation.PushAsync(new CarritoDetallePage(carritoSeleccionado), true);
         }
         
+
     }
 }

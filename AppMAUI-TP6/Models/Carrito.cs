@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace AppMAUI_TP6.Models
 {
     public class Carrito
-    {   
-        public int idCarrito { get; set; }
-        public DateTime fecha { get; set; }
-        public int idUsuario { get; set; }
-        //public ICollection<DetalleCarrito> Productos { get; set; }
+    {
+        public int IdCarrito { get; set; }
+        public DateTime Fecha { get; set; }
+        public int IdUsuario { get; set; }
+        public List<DetallesCarrito> Productos { get; set; }
 
     }
 }

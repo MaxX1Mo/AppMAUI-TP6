@@ -18,22 +18,22 @@ namespace AppMAUI_TP6.Utils
         public const string Registrar = "Usuario/registro";
 
         public const string ListaProducto = "Productos/lista";
-        public const string BuscarProducto = "Productos/buscar/";//{id}
+        public const string BuscarProducto = "Productos/buscar";//{id}
         public const string CrearProducto = "Productos/crear";
         public const string EliminarProducto = "Productos/eliminar";//{id}
         public const string EditarProducto = "Productos/editar";//{id}
 
         public const string ListaUsuario = "Usuario/lista";
-        public const string BuscarUsuario = "Usuario/buscar/";//{id}
+        public const string BuscarUsuario = "Usuario/buscar";//{id}
         public const string CrearUsuario = "Usuario/crear";
-        public const string EliminarUsuario = "Usuario/eliminar/";//{id}
-        public const string EditarUsuario = "Usuario/editar/";//{id}
+        public const string EliminarUsuario = "Usuario/eliminar";//{id}
+        public const string EditarUsuario = "Usuario/editar";//{id}
 
         public const string ListaCarrito = "Carrito/lista";
-        public const string BuscarCarrito = "Carrito/buscar/";//{id}
+        public const string BuscarCarrito = "Carrito/buscar";//{id}
         public const string CrearCarrito = "Carrito/crear";
-        public const string EliminarCarrito = "Carrito/eliminar/";//{id}
-        public const string EditarCarrito = "Carrito/editar/";//{id}
+        public const string EliminarCarrito = "Carrito/eliminar";//{id}
+        public const string EditarCarrito = "Carrito/editar";//{id}
     
     }
 }

@@ -48,10 +48,9 @@ namespace AppMAUI_TP6.Service
         }
 
        
-        #region Crud 
-        public async Task EditarProducto(int idProducto, string nombreProducto, string descripcion, decimal precio, string imagen, int stock)
+
+        public async Task EditarProducto(Producto producto)
         {
-            var producto = new { nombre = nombreProducto, Descripcion = descripcion, Precio = precio, Img = imagen, Stock = stock };
             var jsonContent = JsonConvert.SerializeObject(producto);
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
@@ -61,15 +60,12 @@ namespace AppMAUI_TP6.Service
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             #endregion
 
-            var response = await _httpClient.PutAsync($"{EndPoints.EditarProducto}/{idProducto}", content);
-
-           // var response = await _httpClient.PutAsync(EndPoints.EditarProducto, content);
+            var response = await _httpClient.PutAsync($"{EndPoints.EditarProducto}/{producto.IDProducto}", content);
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception("Algo fallo en la edicion del producto");
+                throw new Exception("Error en la edicion del producto");
             }
-
         }
 
         public async Task EliminarProducto(int idProducto)
@@ -92,9 +88,8 @@ namespace AppMAUI_TP6.Service
             }
         }
 
-        public async Task CrearProducto(string nombreProducto, string descripcion, decimal precio, string imagen, int stock)
+        public async Task CrearProducto(Producto producto)
         {
-            var producto = new { nombre = nombreProducto, Descripcion = descripcion, Precio = precio, Img = imagen, Stock = stock };
             var jsonContent = JsonConvert.SerializeObject(producto);
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
@@ -112,8 +107,25 @@ namespace AppMAUI_TP6.Service
             }
         }
 
+        public async Task BuscarProducto(int idProducto)
+        {
+            var id = new { Id = idProducto };
+            var jsonContent = JsonConvert.SerializeObject(id);
+            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-        #endregion
+            #region autenticacion
+            var token = await SecureStorage.GetAsync("auth_token");
+            if (string.IsNullOrEmpty(token)) { throw new Exception("No se encontró el token de autenticación."); }
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            #endregion
+
+            var response = await _httpClient.GetAsync($"{EndPoints.BuscarProducto}/{idProducto}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Algo fallo en la busqueda del producto");
+            }
+        }
 
     }
 

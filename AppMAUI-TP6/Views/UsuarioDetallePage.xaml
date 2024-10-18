@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:AppMAUI_TP6.ViewModel"
              xmlns:models="clr-namespace:AppMAUI_TP6.Models"
              x:DataType="vm:UsuarioDetalleViewModel"
+             NavigationPage.HasBackButton="False"
              Title="{Binding Title}">
     <ScrollView>
         <VerticalStackLayout Margin="10">
@@ -42,10 +43,12 @@
                 <Label Text="ID Usuario" Grid.Row="6" Grid.Column="0" VerticalOptions="Center"/>
                 <Entry Text="{Binding Usuario.IDUsuario}" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" IsReadOnly="True"/>
             </Grid>
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="40" Padding="20" Margin="0,15">
+            <Button Text="Eliminar" Command="{Binding EliminarCommand}" Padding="15" WidthRequest="130" CommandParameter="{Binding Usuario.IDUsuario}"  BackgroundColor="Red" TextColor="White"/>
+            <Button Text="Editar Usuario"  Command="{Binding EditarUsuarioCommand}" Padding="15" WidthRequest="130"  BackgroundColor="Blue" TextColor="White"/>
+            </HorizontalStackLayout>
 
-            <!-- Botón para volver -->
-            <Button Text="Volver a Lista" Margin="0,20,0,0" Command="{Binding GoBackCommand}" HorizontalOptions="Center"/>
-
+            <Button   Text="Volver a Lista" Margin="0,50,0,0"  Command="{Binding GoBackCommand}" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -1,53 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AppMAUI_TP6.Views.CrearProductoPage"
+             x:Class="AppMAUI_TP6.Views.CrearUsuarioPage"
              xmlns:vm="clr-namespace:AppMAUI_TP6.ViewModel"
-             x:DataType="vm:CrearProductoViewModel"
+             x:DataType="vm:CrearUsuarioViewModel"
              NavigationPage.HasBackButton="False"
              Title="{Binding Title}">
-
     <VerticalStackLayout Padding="20" VerticalOptions="Center">
-
-
+        
+        <!--nombre-->
         <Entry
-            Placeholder="Nombre Producto"
-            Text="{Binding Producto.NombreProducto}" 
+            Placeholder="Nombre"
+            Text="{Binding Usuario.Nombre}" 
             PlaceholderColor="#D3D3D3"
             TextColor="#E6E6E6"
             HeightRequest="50"
             Margin="0,10,0,0"/>
-
+        <!--apellido-->
         <Entry
-            Placeholder="Descripcion"
-            Text="{Binding Producto.Descripcion}" 
+            Placeholder="Apellido"
+            Text="{Binding Usuario.Apellido}" 
             PlaceholderColor="#D3D3D3"
             TextColor="#E6E6E6"
             HeightRequest="50"
             Margin="0,10,0,0"/>
-
+        <!--Username-->
         <Entry
-            Placeholder="Precio"  Keyboard="Numeric"
-            Text="{Binding Producto.Precio, StringFormat='{}{0:F2}'}" 
+            Placeholder="Nombre de usuario"
+            Text="{Binding Usuario.Username}" 
             PlaceholderColor="#D3D3D3"
             TextColor="#E6E6E6"
             HeightRequest="50"
             Margin="0,10,0,0"/>
-
+        <!--Password-->
         <Entry
-            Placeholder="Imagen"
-            Text="{Binding Producto.Imagen}" 
+            Placeholder="Contraseña"
+            Text="{Binding Usuario.Password}" 
             PlaceholderColor="#D3D3D3"
             TextColor="#E6E6E6"
             HeightRequest="50"
             Margin="0,10,0,0"/>
-
-        <Entry Placeholder="Stock"  Keyboard="Numeric"
-            Text="{Binding Producto.Stock, StringFormat='{}', Mode=TwoWay}" 
+        <!--email-->
+        <Entry
+            Placeholder="Correo electronico"
+            Text="{Binding Usuario.Email}" 
             PlaceholderColor="#D3D3D3"
             TextColor="#E6E6E6"
             HeightRequest="50"
             Margin="0,10,0,0"/>
-
+        <!--Nro celular-->
+        <Entry
+            Placeholder="Numero celular" Keyboard="Numeric"
+            Text="{Binding Usuario.NroCelular}" 
+            PlaceholderColor="#D3D3D3"
+            TextColor="#E6E6E6"
+            HeightRequest="50"
+            Margin="0,10,0,0"/>
+        <!--rol-->
+        <Entry
+            Placeholder="Rol de usuario"
+            Text="{Binding Usuario.Rol}" 
+            PlaceholderColor="#D3D3D3"
+            TextColor="#E6E6E6"
+            HeightRequest="50"
+            Margin="0,10,0,0"/>
 
         <Button Text="Crear" 
                 Command="{Binding CrearCommand}" 

@@ -8,16 +8,11 @@ public partial class CarritoDetallePage : ContentPage
 {
 	public CarritoDetallePage(Carrito carrito)
 	{
-        
-        CarritoDetalleViewModel viewModel = new CarritoDetalleViewModel();
+        CarritoService service = new CarritoService();
+        CarritoDetalleViewModel viewModel = new CarritoDetalleViewModel(service);
 
         InitializeComponent();
         this.BindingContext = viewModel;
         viewModel.Carrito = carrito;
-    }
-
-    private void InitializeComponent()
-    {
-        throw new NotImplementedException();
     }
 }

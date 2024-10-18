@@ -4,6 +4,7 @@
              x:Class="AppMAUI_TP6.Views.AcercaPage"
              xmlns:vm="clr-namespace:AppMAUI_TP6.ViewModel"
              x:DataType="vm:AcercaViewModel"
+             NavigationPage.HasBackButton="False"
              Title="{Binding Title}">
     <StackLayout>
         <VerticalStackLayout Padding="20" Spacing="20">

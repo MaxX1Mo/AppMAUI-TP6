@@ -10,7 +10,7 @@
 
         <RefreshView Grid.ColumnSpan="2" Command="{Binding GetCarritosCommand}" IsRefreshing="{Binding IsRefreshing}">
 
-            <CollectionView Grid.Row="1"
+            <CollectionView 
                             ItemsSource="{Binding Carritos}"
                             SelectionMode="Single"
                             SelectedItem="{Binding CarritoSeleccionado}"
@@ -28,24 +28,24 @@
 
                     <DataTemplate x:DataType="model:Carrito">
 
-                        <Frame Padding="10" Margin="5" BorderColor="BlueViolet" CornerRadius="10" HasShadow="True" InputTransparent="True" BackgroundColor="DimGray">
+                        <Frame Padding="10" Margin="5" BorderColor="BlueViolet" CornerRadius="10" HasShadow="True" InputTransparent="True" BackgroundColor="DimGray" Grid.Row="0">
 
                             <Grid RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, *">
 
                                 <!-- ID Carrito-->
                                 <HorizontalStackLayout >
                                     <Label Text="ID carrito: " FontSize="18" VerticalOptions="Center" FontAttributes="Bold" TextColor="LightBlue"/>
-                                    <Label Text="{Binding idCarrito}" FontSize="18" TextColor="SkyBlue"/>
+                                    <Label Text="{Binding IdCarrito}" FontSize="18" TextColor="SkyBlue"/>
                                 </HorizontalStackLayout>
                                 <!-- ID USUARIO-->
                                 <HorizontalStackLayout Grid.Row="1">
                                     <Label Text="ID Usuario: " FontSize="18" VerticalOptions="Center" FontAttributes="Bold" TextColor="LightBlue"/>
-                                    <Label Text="{Binding idUsuario}" FontSize="18" TextColor="SkyBlue"/>
+                                    <Label Text="{Binding IdUsuario}" FontSize="18" TextColor="SkyBlue"/>
                                 </HorizontalStackLayout>
                                 <!-- Fecha-->
                                 <HorizontalStackLayout Grid.Row="2">
                                     <Label Text="Fecha: " FontSize="18" VerticalOptions="Center" FontAttributes="Bold" TextColor="LightBlue"/>
-                                    <Label Text="{Binding fecha}" FontSize="18" TextColor="SkyBlue"/>
+                                    <Label Text="{Binding Fecha}" FontSize="18" TextColor="SkyBlue"/>
                                 </HorizontalStackLayout>
 
                             </Grid>
@@ -58,6 +58,7 @@
                 </CollectionView.ItemTemplate>
 
             </CollectionView>
+
         </RefreshView>
     </Grid>
 </ContentPage>

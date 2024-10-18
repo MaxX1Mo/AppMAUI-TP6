@@ -7,41 +7,35 @@ namespace AppMAUI_TP6.ViewModel
     public partial class CarritoDetalleViewModel : BaseViewModel
     {
         private readonly CarritoService _carritoService;
+
         [ObservableProperty]
         Carrito carrito;
-       
-        
-        public CarritoDetalleViewModel()
+
+        public CarritoDetalleViewModel(CarritoService carritoService)
         {
             Title = "Detalle de Carrito";
-            
+            _carritoService = carritoService;
         }
 
         [RelayCommand]
-        private async Task Eliminar(int id)
+        public async Task EliminarAsync(int id)
         {
-
-            if (!IsBusy)
+            try
             {
-                try
-                {
-                    IsBusy = true;
+                bool confirm = await App.Current.MainPage.DisplayAlert("Confirmar", "¿Estás seguro de eliminar el carrito?", "Sí", "No");
 
+                if (confirm)
+                {
                     await _carritoService.EliminarCarrito(id);
-
-                    IsBusy = false;
-                }
-                catch (Exception ex)
-                {
-                    await App.Current.MainPage.DisplayAlert("Error!", ex.Message, "Ok");
-
-                }
-                finally
-                {
-                    IsBusy = false;
+                    await App.Current.MainPage.DisplayAlert("Éxito", "Carrito eliminado correctamente", "OK");
                 }
             }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Error", $"Hubo un problema: {ex.Message}", "OK");
+            }
         }
+
         [RelayCommand]
         private async Task GoBack()
         {

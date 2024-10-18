@@ -3,6 +3,7 @@
              x:Class="AppMAUI_TP6.Views.RegistrarsePage"
              xmlns:vm="clr-namespace:AppMAUI_TP6.ViewModel"
              x:DataType="vm:RegistrarseViewModel"
+             NavigationPage.HasBackButton="False"
              Title="Registrarse">
 
     <VerticalStackLayout Padding="30" VerticalOptions="Center">
@@ -70,10 +71,11 @@
                 BackgroundColor="#2B0B98"
                 FontSize="20"
                 HeightRequest="48"
+                
                 VerticalOptions="EndAndExpand"
                 Margin="0,30,0,0"/>
 
-        <Button Text="Volver a Login" 
+        <Button Text="Volver a Login" Padding="5"
                 Command="{Binding VolverCommand}" 
                 TextColor="White"
                 BackgroundColor="Gray"

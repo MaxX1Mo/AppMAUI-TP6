@@ -1,13 +1,11 @@
 ﻿<?xml version = "1.0" encoding = "UTF-8" ?>
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:AppMAUI_TP6"
-             xmlns:converters="clr-namespace:AppMAUI_TP6.Utils"
+             xmlns:local="clr-namespace:AppMAUI_TP6"  
              x:Class="AppMAUI_TP6.App"
              >
     <Application.Resources>
         <ResourceDictionary>
-            <converters:pZeroToFalseConverter x:Key="ZeroToFalseConverter" />
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />

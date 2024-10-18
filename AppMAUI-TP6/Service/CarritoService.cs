@@ -30,7 +30,7 @@ namespace AppMAUI_TP6.Service
             if (string.IsNullOrEmpty(token)) { throw new Exception("No se encontró el token de autenticación."); }
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             #endregion
-            
+
             var response = await _httpClient.GetAsync(EndPoints.ListaCarrito);
 
             if (response.IsSuccessStatusCode)
@@ -45,9 +45,9 @@ namespace AppMAUI_TP6.Service
             }
         }
 
-        #region no funciona lo dejo a futuro
+        
         // Método para crear un nuevo carrito
-        public async Task CrearCarrito(int productoId, int cantidad)
+        public async Task CrearCarrito(Producto producto, int cantidad)
         {
             #region logica para autenticacion y extraer dato idusuario
             var token = await SecureStorage.GetAsync("auth_token");
@@ -75,7 +75,7 @@ namespace AppMAUI_TP6.Service
                 IDUsuario = usuarioId,
                 DetallesCarrito = new[]
                 {
-                new { ProductoId = productoId, Cantidad = cantidad }
+                new { ProductoId = producto.IDProducto, Cantidad = cantidad }
             }
             };
 
@@ -87,11 +87,14 @@ namespace AppMAUI_TP6.Service
                 throw new Exception("Error al crear el carrito.");
             }
         }
-        #endregion
-
         
+
+
         public async Task EliminarCarrito(int idCarrito)
         {
+            var id = new { Id = idCarrito };
+            var jsonContent = JsonConvert.SerializeObject(id);
+            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
             #region autenticacion
             var token = await SecureStorage.GetAsync("auth_token");
@@ -99,14 +102,34 @@ namespace AppMAUI_TP6.Service
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             #endregion
 
-            var response = await _httpClient.DeleteAsync($"Carrito/eliminar/{idCarrito}");
+            var response = await _httpClient.DeleteAsync($"{EndPoints.EliminarCarrito}/{idCarrito}");
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception("Algo fallo en la eliminacion del carrito");
+                throw new Exception("Error en la eliminacion del carrito");
             }
         }
-        
+
+        public async Task BuscarCarrito(int idCarrito)
+        {
+            var id = new { Id = idCarrito };
+            var jsonContent = JsonConvert.SerializeObject(id);
+            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+            #region autenticacion
+            var token = await SecureStorage.GetAsync("auth_token");
+            if (string.IsNullOrEmpty(token)) { throw new Exception("No se encontró el token de autenticación."); }
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            #endregion
+
+            var response = await _httpClient.GetAsync($"{EndPoints.BuscarCarrito}/{idCarrito}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Error en la busqueda del carrito");
+            }
+        }
+
 
 
 

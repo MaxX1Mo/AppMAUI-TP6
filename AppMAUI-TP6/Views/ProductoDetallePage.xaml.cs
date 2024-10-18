@@ -9,7 +9,8 @@ public partial class ProductoDetallePage : ContentPage
 	public ProductoDetallePage(Producto producto)
 	{
 		ProductoService service = new ProductoService();
-        ProductoDetalleViewModel viewModel = new ProductoDetalleViewModel(service);
+		CarritoService carritoService = new CarritoService();
+        ProductoDetalleViewModel viewModel = new ProductoDetalleViewModel(service, carritoService);
 		
 		InitializeComponent();
 		this.BindingContext = viewModel;

@@ -61,6 +61,14 @@ namespace AppMAUI_TP6.ViewModel
         }
 
         [RelayCommand]
+        private async Task CrearUsuario()
+        {
+            if (Application.Current.MainPage != null)
+            {
+                await Application.Current.MainPage.Navigation.PushAsync(new CrearUsuarioPage());
+            }
+        }
+        [RelayCommand]
         private async Task GoToDetail()
         {
             if (usuarioSeleccionado == null)

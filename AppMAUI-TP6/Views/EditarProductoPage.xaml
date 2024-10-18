@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:AppMAUI_TP6.ViewModel"
+             x:Class="AppMAUI_TP6.Views.EditarProductoPage"
+             Title="{Binding Title}"
+             NavigationPage.HasBackButton="False"
+             x:DataType="vm:EditarProductoViewModel">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="10">
+            <Grid ColumnDefinitions="0.3*, 0.7*" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+
+                <Label Text="Nombre" Grid.Column="0" VerticalOptions="Center" Grid.Row="0"/>
+                <Entry Text="{Binding Producto.NombreProducto}" Grid.Column="1" Grid.Row="0"/>
+
+                <Label Text="Descripción" Grid.Column="0" VerticalOptions="Center" Grid.Row="1"/>
+                <Editor Text="{Binding Producto.Descripcion}" Grid.Column="1" MaxLength="1000" Grid.Row="1"/>
+
+                <Label Text="Precio" Grid.Column="0" VerticalOptions="Center" Grid.Row="2"/>
+                <Entry Text="{Binding Producto.Precio}" Grid.Column="1" Keyboard="Numeric" Grid.Row="2"/>
+
+                <Label Text="Stock" Grid.Column="0" VerticalOptions="Center" Grid.Row="3"/>
+                <Entry Text="{Binding Producto.Stock}" Grid.Column="1" Keyboard="Numeric" Grid.Row="3"/>
+
+                <Label Text="Imagen URL" Grid.Column="0" VerticalOptions="Center" Grid.Row="4"/>
+                <Entry Text="{Binding Producto.Imagen}" Grid.Column="1" Grid.Row="4"/>
+            </Grid>
+
+            <!-- Botón para guardar los cambios -->
+            <Button Text="Guardar Cambios" Command="{Binding GuardarProductoCommand}" 
+                    BackgroundColor="Green" TextColor="White" Margin="0,20,0,0"/>
+
+            <!-- Botón para cancelar y volver atrás -->
+            <Button Text="Cancelar" Command="{Binding GoBackCommand}" 
+                    BackgroundColor="Red" TextColor="White" Margin="0,10,0,0"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

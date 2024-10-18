@@ -1,18 +1,12 @@
 ﻿using AppMAUI_TP6.Models;
 using System.Net.Http.Headers;
-using System.Text.Json;
 using AppMAUI_TP6.Utils;
-using System.Net.Http.Json;
 using System.Text;
-
-using AppMAUI_TP6.Models;
-using AppMAUI_TP6.Utils;
 using Newtonsoft.Json;
-using System.Net.Http.Headers;
 
 namespace AppMAUI_TP6.Service
 {
-    
+
     public class UsuarioService
     {
         private readonly HttpClient _httpClient;
@@ -38,7 +32,6 @@ namespace AppMAUI_TP6.Service
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
 
-            // Enviar la solicitud al endpoint de Lista Producto
             var response = await _httpClient.GetAsync(EndPoints.ListaUsuario);
 
             if (response.IsSuccessStatusCode)
@@ -53,12 +46,10 @@ namespace AppMAUI_TP6.Service
             }
         }
 
-
-        #region Crud 
-        public async Task EditarUsuario(int idUsuario, string email, string username, string password, int idPersona, string nombre, string apellido, string nroCelular, string rol)
+ 
+        public async Task EditarUsuario(Usuario usuario)
         {
-            var user = new { id = idUsuario, em = email, usern = username, pass = password, personaid = idPersona, nomb = nombre, ape = apellido, nro = nroCelular, Rol = rol };
-            var jsonContent = JsonConvert.SerializeObject(user);
+            var jsonContent = JsonConvert.SerializeObject(usuario);
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
 
@@ -68,11 +59,11 @@ namespace AppMAUI_TP6.Service
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             #endregion
 
-            var response = await _httpClient.PutAsync(EndPoints.EditarUsuario, content);
+            var response = await _httpClient.PutAsync($"{EndPoints.EditarUsuario}/{usuario.IDUsuario}", content);
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception("Algo fallo en la edicion del usuario");
+                throw new Exception("Error en la edicion del usuario");
             }
         }
 
@@ -88,7 +79,7 @@ namespace AppMAUI_TP6.Service
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             #endregion
 
-            var response = await _httpClient.DeleteAsync($"Usuario/eliminar/{content}");
+            var response = await _httpClient.DeleteAsync($"{EndPoints.EliminarUsuario}/{idUsuario}");
             
             if (!response.IsSuccessStatusCode)
             {
@@ -96,10 +87,11 @@ namespace AppMAUI_TP6.Service
             }
         }
 
-        public async Task CrearUsuario(string email, string username, string password, string nombre, string apellido, string nroCelular, string rol)
+
+
+        public async Task CrearUsuario(Usuario usuario)
         {
-            var user = new { em = email, usern = username, pass = password, nomb = nombre, ape = apellido, nro = nroCelular, Rol = rol };
-            var jsonContent = JsonConvert.SerializeObject(user);
+            var jsonContent = JsonConvert.SerializeObject(usuario);
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
             #region autenticacion
@@ -116,7 +108,24 @@ namespace AppMAUI_TP6.Service
             }
         }
 
+        public async Task BuscarUsuario(int idUsuario)
+        {
+            var id = new { Id = idUsuario };
+            var jsonContent = JsonConvert.SerializeObject(id);
+            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-        #endregion
+            #region autenticacion
+            var token = await SecureStorage.GetAsync("auth_token");
+            if (string.IsNullOrEmpty(token)) { throw new Exception("No se encontró el token de autenticación."); }
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            #endregion
+
+            var response = await _httpClient.GetAsync($"{EndPoints.BuscarUsuario}/{idUsuario}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Algo fallo en la eliminacion del usuario");
+            }
+        }
     }
 }

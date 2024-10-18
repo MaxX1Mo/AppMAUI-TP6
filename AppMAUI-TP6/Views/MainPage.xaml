@@ -4,9 +4,9 @@
              xmlns:vm="clr-namespace:AppMAUI_TP6.ViewModel"
              x:DataType="vm:MainViewModel"
              Title="{Binding Title}"
+             NavigationPage.HasBackButton="False"
              x:Class="AppMAUI_TP6.Views.MainPage">
-    <ScrollView Margin="10">
-        <VerticalStackLayout >
+        <VerticalStackLayout Padding="15">
             <Grid 
                 RowSpacing="10"
                 ColumnSpacing="10"
@@ -43,25 +43,9 @@
                     </Button.ImageSource>
                 </Button>
 
-                <Label Text="Seccion Edicion: " Grid.ColumnSpan="4" Grid.Row="4" Margin="0,10,0,0" IsEnabled="False" />
-                <Button ContentLayout="Top, 5" Grid.Column="0" Grid.Row="5" Text="Producto" HeightRequest="80" WidthRequest="80" FontSize="12" Command="{Binding GoToCarritoListaCommand}">
-                    <Button.ImageSource>
-                        <FontImageSource Size="20" FontFamily="MaterialDesignIcons" Glyph="&#xe1bd;" />
-                    </Button.ImageSource>
-                </Button>
-                <Button ContentLayout="Top, 5" Grid.Row="5" Grid.Column="1" Text="Carrito" HeightRequest="80" WidthRequest="80" FontSize="12" >
-                    <Button.ImageSource>
-                        <FontImageSource Size="20" FontFamily="MaterialDesignIcons" Glyph="&#xe8cc;" />
-                    </Button.ImageSource>
-                </Button>
-                <Button ContentLayout="Top, 5" Grid.Column="2" Grid.Row="5" Text="Usuario" HeightRequest="80" WidthRequest="80" FontSize="12" >
-                    <Button.ImageSource>
-                        <FontImageSource Size="20" FontFamily="MaterialDesignIcons" Glyph="&#xe7fd;" />
-                    </Button.ImageSource>
-                </Button>
                 
 
-                <Label Text="" Grid.Row="6" Grid.Column="0"  VerticalOptions="Center" HeightRequest="200"/>
+                <Label Text="" Grid.Row="6" Grid.Column="0"  VerticalOptions="Center" HeightRequest="420"/>
                 <Button  Grid.Row="6" Grid.ColumnSpan="2" ContentLayout="Top, 5" Text="Acerca" HeightRequest="85" Command="{Binding GoToAcercaCommand}">
                     <Button.ImageSource>
                         <FontImageSource Size="22" FontFamily="MaterialDesignIcons" Glyph="&#xe88e;" />
@@ -69,12 +53,12 @@
                 </Button>
                 <Button  Grid.Column="2" Grid.Row="6" Grid.ColumnSpan="2" ContentLayout="Top, 5" Text="Salir" HeightRequest="85" Command="{Binding ExitCommand}">
                     <Button.ImageSource>
-                        <FontImageSource Size="22" FontFamily="MaterialDesignIcons" Glyph="&#xe9ba;" />
+                        <FontImageSource Size="22" FontFamily="MaterialDesignIcons" Glyph="&#xe9ba;" Color="Red"/>
                     </Button.ImageSource>
                 </Button>
                 
 
             </Grid>
         </VerticalStackLayout>
-    </ScrollView>
+    
 </ContentPage>

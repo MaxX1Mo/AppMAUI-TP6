@@ -62,7 +62,16 @@ namespace AppMAUI_TP6.ViewModel
 
             }
         }
-        
+
+        [RelayCommand]
+        private async Task CrearProducto()
+        {
+            if (Application.Current.MainPage != null)
+            {
+                await Application.Current.MainPage.Navigation.PushAsync(new CrearProductoPage());
+            }
+        }
+
         [RelayCommand]
         private async Task GoToDetail()
         {

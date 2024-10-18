@@ -44,10 +44,14 @@ namespace AppMAUI_TP6.ViewModel
         [RelayCommand]
         public async Task Exit()
         {
-            await Application.Current.MainPage.DisplayAlert("Salir", "¿Desea terminar la sesión y salir?", "Aceptar");
-            
-            SecureStorage.Remove("auth_token");
-            await Application.Current.MainPage.Navigation.PopAsync();
+            bool confirm = await App.Current.MainPage.DisplayAlert("Confirmar", "¿Estás seguro de salir?", "Sí", "No");
+
+            if (confirm)
+            {
+                 SecureStorage.Remove("auth_token");
+                 await Application.Current.MainPage.Navigation.PopAsync();
+            }            
+
         }
 
 

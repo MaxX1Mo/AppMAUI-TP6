@@ -1,45 +1,55 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AppMAUI_TP6.Views.ViewsCrud.CarritoDetallePage"
+             x:Class="AppMAUI_TP6.Views.CarritoDetallePage"
              xmlns:vm="clr-namespace:AppMAUI_TP6.ViewModel"
              xmlns:models="clr-namespace:AppMAUI_TP6.Models"
              x:DataType="vm:CarritoDetalleViewModel"
+             NavigationPage.HasBackButton="False"
              Title="{Binding Title}">
     <ScrollView>
         <VerticalStackLayout Margin="10">
-
-            <Grid ColumnDefinitions="Auto, *, *" RowDefinitions="auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto" ColumnSpacing="10" RowSpacing="10">
+            <Grid ColumnDefinitions="Auto, *, *" RowDefinitions="auto, auto, auto, auto, auto, auto, auto, auto, auto, auto" ColumnSpacing="10" RowSpacing="10">
 
                 <!-- ID Carrito -->
                 <Label Text="ID Carrito" Grid.Row="0" Grid.Column="0" VerticalOptions="Center"/>
-                <Entry Text="{Binding Carrito.idCarrito}" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
+                <Entry Text="{Binding Carrito.IdCarrito}" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" IsReadOnly="True"/>
 
                 <!-- Fecha -->
                 <Label Text="Fecha" Grid.Row="2" Grid.Column="0" VerticalOptions="Center"/>
-                <Entry Text="{Binding Carrito.fecha}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"/>
+                <Entry Text="{Binding Carrito.Fecha}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" IsReadOnly="True"/>
 
                 <!-- idUsuario -->
                 <Label Text="ID Usuario" Grid.Row="4" Grid.Column="0" VerticalOptions="Center"/>
-                <Entry Text="{Binding Carrito.idUsuario}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"/>
+                <Entry Text="{Binding Carrito.IdUsuario}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" IsReadOnly="True"/>
 
-                <!-- Detalles Carrito -->
-                <Label Text="Productos: " Grid.Row="6" Grid.Column="0" VerticalOptions="Center"/>
-       <!--no funca-->
-                  <Label Text="ID Detalles Carrito" Grid.Row="7" Grid.Column="1" VerticalOptions="Center"/>
-                  <!--<Entry Text="{Binding Carrito.Productos.idDetallesCarrito}" Grid.Row="8" Grid.Column="3"  />-->
-
-                     <Label Text="Cantidad" Grid.Row="10" Grid.Column="1" VerticalOptions="Center"/>
-                     <!--<Entry Text="{Binding Carrito.Productos.cantidad}" Grid.Row="10" Grid.Column="2"  />-->
-
-                     <Label Text="ID Producto" Grid.Row="11" Grid.Column="1" VerticalOptions="Center"/>
-                     <!--<Entry Text="{Binding Carrito.Productos.idProducto}" Grid.Row="11" Grid.Column="2" />-->
             </Grid>
-            <!-- Botón para volver -->
-            <Button Text="Eliminar" Margin="0,10,0,0" Command="{Binding EliminarCommand}" CommandParameter="{Binding Carrito.idCarrito}" HorizontalOptions="Center" BackgroundColor="Red" TextColor="White"/>
-            <!-- Botón para volver -->
-            <Button Text="Volver a Lista" Margin="0,50,0,0" Command="{Binding GoBackCommand}" HorizontalOptions="Center"/>
+            
+            <!-- Lista de DetallesCarrito -->
+            <!--<Label Text="Productos" FontAttributes="Bold" FontSize="Medium" Margin="0,10,0,0"/>
+            <CollectionView ItemsSource="{Binding Carrito.Productos}" Margin="0,10,0,0">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="Auto, *, *" RowDefinitions="Auto" Padding="5">
+                            --><!-- ID DetallesCarrito --><!--
+                            <Label Text="ID Detalle: " Grid.Column="0" />
+                            <Label Text="{Binding idDetallesCarrito}" Grid.Column="1" />
 
+                            --><!-- Cantidad --><!--
+                            <Label Text="Cantidad: " Grid.Column="0" Grid.Row="1" />
+                            <Label Text="{Binding cantidad}" Grid.Column="1" Grid.Row="1" />
+
+                            --><!-- ID Producto --><!--
+                            <Label Text="ID Producto: " Grid.Column="0" Grid.Row="2" />
+                            <Label Text="{Binding idProducto}" Grid.Column="1" Grid.Row="2" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>-->
+
+            <!-- Botones -->
+            <Button Text="Eliminar" Margin="0,10,0,0" Command="{Binding EliminarCommand}" CommandParameter="{Binding Carrito.IdCarrito}" HorizontalOptions="Center" BackgroundColor="Red" TextColor="White"/>
+            <Button Text="Volver a Lista" Margin="0,50,0,0" Command="{Binding GoBackCommand}" HorizontalOptions="Center"/>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

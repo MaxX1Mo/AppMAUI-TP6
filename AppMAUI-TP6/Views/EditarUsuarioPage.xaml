@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppMAUI_TP6.Views.EditarUsuarioPage"
+             xmlns:vm="clr-namespace:AppMAUI_TP6.ViewModel"
+             Title="{Binding Title}"
+             NavigationPage.HasBackButton="False"
+             x:DataType="vm:EditarUsuarioViewModel">
+    <ScrollView>
+        <VerticalStackLayout Padding="10">
+            <Grid ColumnDefinitions="auto, auto, auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+
+                <Label Text="Nombre" Grid.Row="0" Grid.Column="0" VerticalOptions="Center"/>
+                <HorizontalStackLayout Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2">
+                    <Entry Text="{Binding Usuario.Nombre}" VerticalOptions="Center"/>
+                    <Entry Text="{Binding Usuario.Apellido}" VerticalOptions="Center" Margin="5,0,0,0"/>
+                </HorizontalStackLayout>
+
+                <!-- Email -->
+                <Label Text="Email" Grid.Row="1" Grid.Column="0" VerticalOptions="Center"/>
+                <Entry Text="{Binding Usuario.Email}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"/>
+
+                <!-- Username -->
+                <Label Text="Username" Grid.Row="2" Grid.Column="0" VerticalOptions="Center"/>
+                <Entry Text="{Binding Usuario.Username}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"/>
+
+                <!-- Password -->
+                <Label Text="Password" Grid.Row="3" Grid.Column="0" VerticalOptions="Center"/>
+                <Entry Text="{Binding Usuario.Password}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"/>
+
+                <!-- Telefono -->
+                <Label Text="Telefono" Grid.Row="4" Grid.Column="0" VerticalOptions="Center"/>
+                <Entry Text="{Binding Usuario.NroCelular}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"/>
+
+                <!-- Rol -->
+                <Label Text="Rol" Grid.Row="5" Grid.Column="0" VerticalOptions="Center"/>
+                <Entry Text="{Binding Usuario.Rol}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"/>
+            </Grid>
+
+            <!-- Botón para guardar los cambios -->
+            <Button Text="Guardar Cambios" Command="{Binding GuardarUsuarioCommand}" 
+                    BackgroundColor="Green" TextColor="White" Margin="0,20,0,0"/>
+
+            <!-- Botón para cancelar y volver atrás -->
+            <Button Text="Cancelar" Command="{Binding GoBackCommand}" 
+                    BackgroundColor="Red" TextColor="White" Margin="0,10,0,0"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

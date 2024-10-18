@@ -28,7 +28,7 @@
 
                     <DataTemplate x:DataType="model:Usuario">
 
-                        <Frame Padding="10" Margin="5" BorderColor="BlueViolet" CornerRadius="10" HasShadow="True" InputTransparent="True" BackgroundColor="DimGray">
+                        <Frame Padding="10" Margin="5" BorderColor="BlueViolet" CornerRadius="10" HasShadow="True" InputTransparent="True" BackgroundColor="DimGray" Grid.Row="0">
 
                             <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="Auto, *">
 
@@ -66,6 +66,22 @@
                 </CollectionView.ItemTemplate>
 
             </CollectionView>
+
         </RefreshView>
+
+        <Frame Grid.Row="1" Grid.ColumnSpan="2" Padding="10" Margin="10" BorderColor="BlueViolet" CornerRadius="10" HasShadow="True" BackgroundColor="DimGray">
+            <HorizontalStackLayout HorizontalOptions="CenterAndExpand">
+                <Button Text="Crear Usuario"
+                Command="{Binding CrearUsuarioCommand}"
+                HeightRequest="48"
+                WidthRequest="300"
+                BackgroundColor="Green"
+                TextColor="White"
+                FontAttributes="Bold"
+                CornerRadius="25"/>
+            </HorizontalStackLayout>
+        </Frame>
+        
+
     </Grid>
 </ContentPage>
