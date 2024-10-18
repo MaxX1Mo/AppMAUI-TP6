@@ -34,11 +34,11 @@ namespace AppMAUI_TP6.ViewModel
         {
             await Application.Current.MainPage.Navigation.PushAsync(new UsuarioListaPage());
         }
-        [RelayCommand]
-        public async Task GoToCarritoLista()
-        {
-            await Application.Current.MainPage.Navigation.PushAsync(new CarritoListaPage());
-        }
+        //[RelayCommand]
+        //public async Task GoToCarritoLista()
+        //{
+        //    await Application.Current.MainPage.Navigation.PushAsync(new CarritoListaPage());
+        //}
         
         
         [RelayCommand]
